@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+	<div ng-app="myApp" ng-controller="myCtrl">
+
+<H2><p>Login Detail</p></H2>
+		<input type="text" data-ng-model="input.userName" placeholder="usename">{{input.name}} </br>
+		<input type="text" data-ng-model="input.password" placeholder="password">{{input.city}} </br>
+		<p><button ng-click="myFunction(input)">Login</button>
+		<button ng-click="MyRegister()">Register</button>
+
+		<p>{{ count }}</p>
+		
+		<p>{{ msg }}</p>
+	
+		<p>login msg: {{ loginMsg }}</p>
+		
+		<p>username:{{ myData.username }}</p>
+		
+		<p>{{ myData.password }}</p>
+	</div>
+	<script>
+		var dataUrls = {
+			logindetail : 'assets/json/logindetail.json',
+			login2 : 'assets/json/001.json'
+		}, allSurveys = [];
+		allSurveyResponses = [];
+		var app = angular.module('myApp', []);
+		
+		//var mainApp = angular.module("mainApp", ['ngRoute']);
+
+	/* 	app.config(function($routeProvider) {
+		    $routeProvider
+		        .when('/login', {
+		            templateUrl: 'text.html',
+		            controller: 'myCtrl'
+		        })
+		        .when('/register', {
+		            templateUrl: 'register.html',
+		            controller: 'StudentController'
+		        })
+		        .otherwise({
+		            redirectTo: '/login'
+		        });
+		});
+		 */
+		app.controller('myCtrl', function($scope,$http) {
+			$scope.count = 0;
+			$scope.msg = "this is before click";
+			var uname,pw;
+			$http.get(dataUrls.logindetail).then(function (response) {
+				
+			      $scope.myData = response.data;
+			      allSurveys = response.data;
+			      uname=$scope.myData.username;
+			      pw=$scope.myData.password;
+			    
+			      $scope.input.userName
+			  });
+			$scope.myFunction = function(input) {
+				//alert(allSurveys.username);
+				/* $scope.master = angular.copy(user);
+				alert($scope.master); */
+				$scope.count++;
+				$scope.master = {};
+				$scope.msg = "this is after click !!!";
+	
+				if(allSurveys.username== $scope.input.userName  && allSurveys.password==$scope.input.password){
+					$scope.loginMsg = "You are successfully loged in";
+					$scope.input = angular.copy($scope.master);
+				}
+				else{
+					$scope.loginMsg = "Please enter valid credentail!!";
+					$scope.input = angular.copy($scope.master);
+				}
+			}
+		});
+		
+		
+		
+
+	</script>
+
+</body>
+</html>
